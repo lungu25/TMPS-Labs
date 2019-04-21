@@ -15,12 +15,16 @@ With the state pattern, a state machine is implemented by implementing each indi
 Implementation (TV Remote example)
 We will use State pattern to implement TV Remote example.
 Step 1 : Create an interface.
+```
 public interface State {
  public void doAction();
 }
+```
+
 Step 2: State Design Pattern Concrete State Implementations
 In our example, we can have two states – one for turning TV on and another to turn it off. So we will create two concrete state implementations for these behaviors.
 
+```
 public class TVStartState implements State {
  @Override
  public void doAction() {
@@ -33,7 +37,11 @@ public class TVStopState implements State {
   System.out.println("TV is turned OFF");
  }
 }
+```
+
 Step 3 : Let's implement our Context object that will change its behavior based on its internal state.
+
+```
 public class TVContext implements State {
 
  private State tvState;
@@ -52,8 +60,12 @@ public class TVContext implements State {
  }
 
 }
+```
+
 Notice that Context also implements State and keep a reference of its current state and forwards the request to the state implementation.
 Step 4 :  Now let’s write a simple program to test our state pattern implementation of TV Remote.
+
+```
 public class TVRemote {
 
  public static void main(String[] args) {
@@ -68,9 +80,14 @@ public class TVRemote {
   context.doAction(); 
  }
 }
+```
+
 Step 5 : Output
+
+```
 TV is turned ON
 TV is turned OFF
+```
 
 ## Template-method <a name="template-method"></a>
 
@@ -88,11 +105,7 @@ Source Code
 Follow the steps to implementation of Template design pattern.
 Let's create a coffee beverage system
 Step 1: Create CaffeineBeverage class ,which defines skeleton for the algorithm.
-/**
- * CaffeineBeverage defines skeleton for the algorithm.
- * @author RAMESH
- *
- */
+```
 public abstract class CaffeineBeverage {
   
  final void prepareRecipe() {
@@ -114,7 +127,11 @@ public abstract class CaffeineBeverage {
   System.out.println("Pouring into cup");
  }
 }
+```
+
 Step 2 :  Create a Coffee class , which extends abstract CaffeineBeverage class and implements abstract methods.
+
+```
 public class Coffee extends CaffeineBeverage {
  public void brew() {
   System.out.println("Dripping Coffee through filter");
@@ -123,7 +140,9 @@ public class Coffee extends CaffeineBeverage {
   System.out.println("Adding Sugar and Milk");
  }
 }
+```
 Step 3 :  Create a Tea class which extends abstract CaffeineBeverage class and implements abstract methods.
+```
 public class Tea extends CaffeineBeverage {
  public void brew() {
   System.out.println("Steeping the tea");
@@ -132,7 +151,10 @@ public class Tea extends CaffeineBeverage {
   System.out.println("Adding Lemon");
  }
 }
+```
 Step 4 : With a hook, we can override a method or not, It's our choice , If we don't then abstract class provides default implementation.
+
+```
 public abstract class CaffeineBeverageWithHook {
  
  void prepareRecipe() {
@@ -160,7 +182,10 @@ public abstract class CaffeineBeverageWithHook {
   return true;
  }
 }
+```
 Step 5 : Let's override the hook() method and provide the own implementation.
+
+```
 import java.io.*;
 
 public class CoffeeWithHook extends CaffeineBeverageWithHook {
@@ -242,7 +267,10 @@ public class TeaWithHook extends CaffeineBeverageWithHook {
   return answer;
  }
 }
+```
 Step  6 : Test the above implementation.
+
+```
 Let's create a hot coffee and hot tea, here customer needs to decide whether he/she wants condiment by input.
 public class BeverageTestDrive {
  public static void main(String[] args) {
@@ -293,7 +321,7 @@ Dripping Coffee through filter
 Pouring into cup
 Would you like milk and sugar with your coffee (y/n)? y
 Adding Sugar and Milk
-
+```
 
 ## Proxy <a name="proxy"></a>
 
@@ -304,10 +332,16 @@ Let's take an example of Printers Implementation.
 PrinterController is not responsible for the actual desired action but is actually delegated to a helper class either CanonPrinter, EpsonPrinter or HpPrinter. The consumer does not have or require knowledge of the actual class carrying out the action, only the container on which they are calling.
 
 Step 1: First create Printer interface that both the Controller and the Delegate classes will implement.
+
+```
 public interface Printer {
   void print(final String message);
 }
-Step 2: Specialised Implementation of Printer for a Canon Printer, in this case the message to be printed is appended to "Canon Printer : ".
+```
+
+Step 2: Specialised Implementation of Printer for a Canon Printer, in this case the message to be printed is appended to "Canon Printer:".
+
+```
 public class CanonPrinter implements Printer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CanonPrinter.class);
@@ -317,7 +351,11 @@ public class CanonPrinter implements Printer {
   }
 
 }
-Step 3: Specialised Implementation of Printer for a Epson Printer, in this case the message to be printed is appended to "Epson Printer : ".
+```
+
+Step 3: Specialised Implementation of Printer for a Epson Printer, in this case the message to be printed is appended to "Epson Printer:".
+
+```
 public class EpsonPrinter implements Printer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(EpsonPrinter.class);
@@ -327,7 +365,11 @@ public class EpsonPrinter implements Printer {
   }
 
 }
-Step 4: Specialised Implementation of Printer for a HP Printer, in this case the message to be printed is appended to "HP Printer : ".
+```
+
+Step 4: Specialised Implementation of Printer for a HP Printer, in this case the message to be printed is appended to "HP Printer :".
+
+```
 public class HpPrinter implements Printer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HpPrinter.class);
@@ -337,11 +379,15 @@ public class HpPrinter implements Printer {
   }
 
 }
+```
+
 Step 5: it's time to implement Delegator class.
  Delegator Class to delegate the implementation of the Printer.
  This ensures two things:
 when the actual implementation of the Printer class changes the delegation will still be operational
 the actual benefit is observed when there are more than one implementors and they share a delegation control.
+
+```
 public class PrinterController implements Printer {
 
   private final Printer printer;
@@ -354,7 +400,11 @@ public class PrinterController implements Printer {
     printer.print(message);
   }
 }
+```
+
 Step 6: Let's test the Delegation pattern using the main method.
+
+```
 public class App {
 
   public static final String MESSAGE_TO_PRINT = "hello world";
@@ -375,6 +425,7 @@ public class App {
   }
 
 }
+```
 
 ## Chain-of-responsibility <a name="chain-of-responsibility"></a>
 
@@ -399,6 +450,8 @@ Collaborations
 When a client issues a request, the request propagates along the chain until a ConcreteHandler object takes responsibility for handling it.
 Source code
  Step 1 : First we have the request class
+ 
+ ```
 public class Request {
 
   private final RequestType requestType;
@@ -425,7 +478,10 @@ public class Request {
 public enum RequestType {
   DEFEND_CASTLE, TORTURE_PRISONER, COLLECT_TAX
 }
+```
 Step 2 : Then the request handler hierarchy
+
+```
 public abstract class RequestHandler {
   private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandler.class);
   private RequestHandler next;
@@ -470,8 +526,10 @@ public class OrcCommander extends RequestHandler {
 }
 
 // OrcOfficer and OrcSoldier are defined similarly as OrcCommander
-
+```
 Step 3 :Then we have the Orc King who gives the orders and forms the chain
+
+```
 public class OrcKing {
   RequestHandler chain;
 
@@ -487,7 +545,10 @@ public class OrcKing {
     chain.handleRequest(req);
   }
 }
-Step 4 : Then it is used as follows
+```
+Step 4 : Then it is used as follows 
+
+```
 OrcKing king = new OrcKing();
 king.makeRequest(new Request(RequestType.DEFEND_CASTLE, "defend castle")); // Orc commander handling request "defend castle"
 king.makeRequest(new Request(RequestType.TORTURE_PRISONER, "torture prisoner")); // Orc officer handling request "torture prisoner"
@@ -497,6 +558,8 @@ Use Chain of Responsibility when
 more than one object may handle a request, and the handler isn't known a prior. The handler should be ascertained automatically
 you want to issue a request to one of several objects without specifying the receiver explicitly
 the set of objects that can handle a request should be specified dynamically.
+
+```
 
 ## Iterator <a name="iterator"></a>
 It is belongs to behavioral design patterns catalog.
@@ -515,18 +578,18 @@ Collaborations
  A ConcreteIterator keeps track of the current object in the aggregate and can compute the succeeding object in the traversal. 
 Source code
 Step 1: Create a Iterator interface.
-/**
- * 
- * ItemIterator interface.
- * 
- */
+
+```
 public interface ItemIterator {
 
   boolean hasNext();
 
   Item next();
 }
+```
 Step 2: Create Item class (iterating list of items).
+
+```
 public class Item {
 
   private ItemType type;
@@ -550,28 +613,29 @@ public class Item {
     this.type = type;
   }
 }
+```
+
 Step 3 :  Create enum for ItemTypes
+
+```
 public enum ItemType {
 
   ANY, WEAPON, RING, POTION
 
 }
+```
+
 Step 4: Create TreasureChest class which holds a collection of items.
+
+```
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 
- * TreasureChest, the collection class.
- * 
- */
+
 public class TreasureChest {
 
-  private List<Item> items;
+private List<Item> items;
 
-  /**
-   * Constructor
-   */
   public TreasureChest() {
     items = new ArrayList<>();
     items.add(new Item(ItemType.POTION, "Potion of courage"));
@@ -590,9 +654,6 @@ public class TreasureChest {
     return new TreasureChestItemIterator(this, itemType);
   }
 
-  /**
-   * Get all items
-   */
   public List<Item> getItems() {
     List<Item> list = new ArrayList<>();
     list.addAll(items);
@@ -600,14 +661,13 @@ public class TreasureChest {
   }
 
 }
+```
+
 Step 5: Let's create an Iterator implementation class TreasureChestItemIterator.java
+
+```
 import java.util.List;
 
-/**
- * 
- * TreasureChestItemIterator
- *
- */
 public class TreasureChestItemIterator implements ItemIterator {
 
   private TreasureChest chest;
@@ -655,14 +715,13 @@ public class TreasureChestItemIterator implements ItemIterator {
     return tempIdx;
   }
 }
+```
+
 Step 6: Create App class to test Iterator design pattern.
+
+```
 public class App {
 
-  /**
-   * Program entry point
-   * 
-   * @param args command line args
-   */
   public static void main(String[] args) {
     TreasureChest chest = new TreasureChest();
 
@@ -693,3 +752,4 @@ public class App {
     }
   }
 }
+```
